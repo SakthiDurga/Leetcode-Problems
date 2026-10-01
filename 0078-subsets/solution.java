@@ -1,17 +1,17 @@
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
-        int n = nums.length;
-        int subsets = 1 << n;
-        List<List<Integer>> output = new ArrayList<>();
-        for(int i = 0; i < subsets; i++){
-            List<Integer> subset = new ArrayList<>();
-            for(int j = 0; j < n; j++){
-                if((i & (1 << j)) != 0){
-                    subset.add(nums[j]);
-                }
-            }
-            output.add(subset);
+        List<List<Integer>> res = new ArrayList<>();
+        formSubsets(nums, 0, res, new ArrayList<>());
+        return res;
+    }
+    public void formSubsets(int[] nums, int index, List<List<Integer>> res, List<Integer> temp){
+        if(index == nums.length){
+            res.add(new ArrayList<>(temp));
+            return;
         }
-        return output;
+        temp.add(nums[index]);
+        formSubsets(nums, index+1, res, temp);
+        temp.remove(temp.size()-1);
+        formSubsets(nums, index+1, res, temp);
     }
 }
